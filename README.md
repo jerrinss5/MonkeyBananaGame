@@ -1,1 +1,12 @@
 # MonkeyBananaGame
+
+Design:
+Monkey Banana game involves monkey behaving differently in different states. This is similar to state behavior where an object behaves differently in different states.
+In our MonkeyBanana game, there would be a monkey subject class which listens from the client and depending on the State it is in, will call the respective function and move to the next state.Events in the class which help monkey move to different states(Move state and Idle state) are keyUpPressed, keyDownPresed, keyLeftPressed, keyRightPressed and keyReleased.
+Implementation:
+Game has been implemented in Swing, with the main class (GameLayoutInit) extending JFrame forming the canvas where every other component would be placed. The frame has then been divided into two parts forming the score panel and the game panel. The score panel is a JPanel has the play button, score, overall timer and new banana timer on it positioned at the center. The game panel has the monkey and the banana which are imageIcons on it placed randomly. KeyListener (MonkeyKeyListener) is placed to listen on the frame, which listens to various key events. On listening to an event MonkeyKeyListener calls the Subject class methods which is an aggregation of MonkeyGameState classs.
+MonkeyGameState class is the state class which has do nothing implementation of the events mentioned earlier. The Subject class maintains the monkey state and act as an interface between client (MonkeyKeyListener) and the various events of the state class (Move and Idle).
+The client need not have to worry about the state at which the monkey is at, it would just trigger the event and at the background the subject class will call the respective state’s method. This is a type of data abstraction and separation of concerns at the client level, freeing client of maintaining unnecessary information.
+Idle state will have keyUpPressed, keyDownPressed, keyRightPressed and keyLeftPressed implementation for the subject. It would perform the respective operation and then move to the Move state. Since there is no keyReleased event actually happening, we emulate the keyReleased event by calling this function after doing these operations.
+Move state will have implementation (keyReleased) which needs to be done for the monkey to move to Idle state by returning Idle state.
+On returning to Idle, the MonkeyKeyListener waits for event from the user.
